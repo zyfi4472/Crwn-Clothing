@@ -1,9 +1,11 @@
-import { connectFirestoreEmulator } from "firebase/firestore";
 import { useState } from "react";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from "..//..//utils/firebase.utils";
+import FormInput from "../form-input/form-input.component";
+import "./sign-up-form.styles.css";
+import Button from "../button/button.component";
 
 const SignUp = () => {
   const defaultInputField = {
@@ -50,43 +52,44 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <h1>SIGN UP USING EMAIL AND PASSWORD</h1>
+    <div className="sign-up-container">
+      <h2>Don't have an account</h2>
+      <span>SIGN UP USING EMAIL AND PASSWORD</span>
 
       <form onSubmit={submitHandler}>
-        <label>Name</label>
-        <input
+        <FormInput
+          label="Name"
           type="text"
           required
           name="displayName"
           onChange={changeHandler}
           value={displayName}
         />
-        <label>Email</label>
-        <input
+        <FormInput
+          label="Email"
           type="email"
           required
           onChange={changeHandler}
           name="email"
           value={email}
         />
-        <label>Password</label>
-        <input
+        <FormInput
+          label="Password"
           type="password"
           required
           onChange={changeHandler}
           name="password"
           value={password}
         />
-        <label>Confirm Password</label>
-        <input
+        <FormInput
+          label="Confirm Password"
           type="password"
           required
           onChange={changeHandler}
           name="confirmPassword"
           value={confirmPassword}
         />
-        <button type="submit">Sign Up</button>
+        <Button type="submit">Sign Up</Button>
       </form>
     </div>
   );
