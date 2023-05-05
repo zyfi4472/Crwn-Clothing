@@ -16,7 +16,6 @@ const SignUp = () => {
   };
 
   const [inputFileds, setInputField] = useState(defaultInputField);
-
   const { displayName, email, password, confirmPassword } = inputFileds;
 
   console.log(inputFileds);
@@ -27,7 +26,6 @@ const SignUp = () => {
 
   const changeHandler = (event) => {
     const { name, value } = event.target;
-
     setInputField({ ...inputFileds, [name]: value });
   };
 

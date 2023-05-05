@@ -2,8 +2,10 @@ import { initializeApp } from "firebase/app";
 import {
   getAuth,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
+  EmailAuthProvider,
 } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -21,6 +23,7 @@ const firebaseConfig = {
 const firebaseApppp = initializeApp(firebaseConfig);
 
 const provider = new GoogleAuthProvider();
+const provider2 = new EmailAuthProvider();
 
 provider.setCustomParameters({
   prompt: "select_account",
@@ -28,6 +31,8 @@ provider.setCustomParameters({
 
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const EmailAndPasswordSignin = () =>
+  signInWithEmailAndPassword(auth, provider2);
 
 export const db = getFirestore();
 
@@ -61,4 +66,10 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
   if (!email || !password) return;
 
   return await createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const userSignIn = async (email, password) => {
+  if (!email || !password) return;
+
+  return await signInWithEmailAndPassword(auth, email, password);
 };
