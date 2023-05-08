@@ -5,9 +5,10 @@ import {
 } from "../../../utils/firebase.utils";
 import FormInput from "../../form-input/form-input.component";
 import SignUp from "../../sign-up-form/sign-up-form.component";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Button from "../../button/button.component";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import "./sign-in.styles.css";
+import "../../../contexts/user.context";
 
 const SignIn = () => {
   const logGoogleUser = async () => {
@@ -24,6 +25,8 @@ const SignIn = () => {
   const [inputFileds, setInputField] = useState(defaultInputField);
   const { email, password } = inputFileds;
 
+  const { setCurrentUser } = useContext(useContext);
+
   console.log(inputFileds);
 
   const onChangeHandler = (event) => {
@@ -38,9 +41,10 @@ const SignIn = () => {
     event.preventDefault();
 
     try {
-      const response = await userSignIn(email, password);
+      const { user } = await userSignIn(email, password);
+      setCurrentUser(user);
       resetInputFields();
-      console.log(response);
+      console.log(user);
       alert("Logged in successfully!!");
     } catch (error) {
       alert("unable to signIn" + error);
@@ -49,9 +53,6 @@ const SignIn = () => {
 
   return (
     <div>
-      <button onClick={logGoogleUser}>SIGN IN with google</button>
-
-      <SignUp />
       <form onSubmit={signinHandler}>
         <FormInput
           label="Email"
@@ -69,8 +70,19 @@ const SignIn = () => {
           name="password"
           value={password}
         />
-        <Button type="submit">Sign In</Button>
+
+        <div className="buttons-container">
+          <Button type="submit">Sign In</Button>
+          <Button
+            type="button"
+            buttonType="google"
+            onClick={signInWithGooglePopup}
+          >
+            Google Sign In
+          </Button>
+        </div>
       </form>
+      <SignUp />
     </div>
   );
 };
