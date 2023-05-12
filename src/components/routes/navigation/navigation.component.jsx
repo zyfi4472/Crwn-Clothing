@@ -3,6 +3,7 @@ import { Fragment, useContext } from "react";
 import "./navigation.styles.css";
 import { ReactComponent as CrwnLogo } from "../../../assets/logo.svg";
 import { UserContext } from "../../../contexts/user.context";
+import { userSignOut } from "../../../utils/firebase.utils.js";
 
 const Navigation = () => {
   const { currentUser } = useContext(UserContext);
@@ -18,9 +19,16 @@ const Navigation = () => {
           <Link className="shop-container" to="/shop">
             Shop
           </Link>
-          <Link className="sign-in" to="/sign-in">
-            Sign In
-          </Link>
+
+          {currentUser ? (
+            <span className="nav-link" onClick={userSignOut}>
+              SIGN OUT
+            </span>
+          ) : (
+            <Link className="sign-in" to="/sign-in">
+              Sign In
+            </Link>
+          )}
         </div>
       </div>
       <Outlet />
